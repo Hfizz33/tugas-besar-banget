@@ -1,6 +1,6 @@
 first setup (wajib lakukan setiap kali mau buka project):
 1) git checkout main //masuk ke branch main sekaligus merge hasil terbaru
-2) git push origin main //update seluruh kode baru yang udah di bikin
+2) git pull origin main //update seluruh kode baru yang udah di bikin
 
 
 cara commit hasil kerja:
