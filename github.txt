@@ -1,0 +1,10 @@
+cara commit file:
+1) git add <file> // tahap pertama untuk menambahkan file yang sudah di bikin
+2) commit -m "message" // membuat pesan apa aja yang di ubah atau di tambahin di project
+3) git push origin main // buat push project ke github biar bisa di liat sama yang lain
+
+
+contoh:
+git add project.cpp,project2.cpp
+commit -m "menambahkan fitur baru"
+git push origin main
