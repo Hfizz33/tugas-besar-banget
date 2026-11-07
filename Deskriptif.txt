@@ -1,0 +1,32 @@
+B.	ALGORITMA DESKRIPTIF
+Pembuatan program menejemen stok barang menggunakan bahasa pemrograman C++. Isi program akan cenderung banyak menggunakan array untuk menyimpan berbagai data dari setiap barang. Berikut adalah tahapan algoritma yang akan dimulai dari deskriptif.
+1.	Membuat sistem login sederhana untuk kepentingan keamanan.
+2.	Saat sudah berhasil login muncul berbagai menu pilihan, antara lain:
+    a.	Daftar barang
+    b.	Kasir
+    c.	Riwayat penjualan
+    d.	Restock
+    e.	Riwayat Pembelian (Riwayat Restock)
+    f.	Ubah Data barang
+    g.	Hapus barang
+
+3.	Jika memilih opsi a (Daftar Barang) :
+Akan muncul sebuah tabel daftar barang yang ada pada supermarket. Di dalam tabel tersebut terdapat kolom No, Nama barang, kode unik, kategori barang, harga beli, harga jual, nama suplier, tanggal kadaluarsa, dan jumlah stok. Pada kolom jumlah stok, jika stok <= 5, akan ada sebuah indikator bahwa barang tersebut harus segera di restock. Pada bagian bawah tabel terdapat opsi untuk keluar dari menu Daftar barang.
+4.	Jika memilih opsi b  (Kasir):
+Akan tersedia sebuah input nama barang. Kasir menginput nama barang serta jumlah barang. Setiap input barang, akan selalu muncul opsi ingin lanjut menambah atau tidak. Jika memilih opsi tidak, akan muncul tabel dengan kolom yang terdiri dari No, Nama barang, jumlah barang, harga awal, harga awal dikali jumlah barang. Di baris terakhir tabel terdapat total harga dari semua barang yang dibeli oleh konsumen.
+Setelah tabel tercetak, terdapat pilihan input ingin melayani lagi atau tidak. Jika ingin melayani lagi, akan kembali ke input barang lagi. Jika memilih tidak, akan kembali ke menu utama. Setiap tabel tercetak akan masuk kedalam riwayat penjualan.
+5.	Jika memilih opsi c  (Riwayat Penjualan):
+Tersedia riwayat struk/tabel hasil dari kasir. Setiap kasir mencetak struk akan otomatis langsung tersemipan di sini.
+Tersedia opsi untuk kembali ke menu awal.
+6.	Jika memilih opsi d  (Restock):
+Tersedia dua pilihan, ingin membeli produk baru atau membeli lagi produk yang sudah ada. Jika memilih produk baru, daftar produk pada suplier nanti akan menampilkan produk-produk yang berbeda dari sebelumnya, sedangkan jika memilih menambah produk sebelumnya, akan menampilka produk yang sama dalam daftar barang.
+Jika sudah memilih salah satu opsi, akan tersedia sebuah tabel suplier yang dimana memiliki beberapa kolom, yaitu No. Nama suplier, dan kategori barang yang dimiliki suplier. Diakhir tabel tersedia input untuk memilih suplier yang mana. Misal memilih salah satu dari suplier, muncul tabel lagi berupa daftar barang yang dimiliki oleh suplier beserta harga dari suplier, harga pasar yang direkomendasikan, dan tanggal kadaluara. Barang yang ingin dibeli diinput kemudian akan masuk ke keranjang. Jika sudah memilih barang apa saja yang ingin dibeli dengan jumlahnya, bisa langsung melakukan opsi pembelian yang berada pada keranjang. Jika sudah di beli, barang akan otomatis masuk ke stok gudang dan juga riwayat pembeliann akan otomatis langsung masuk ke menu riwayat pembelian.
+Tersedia opsi untuk kembali ke menu awal.
+7.	Jika memilih opsi e  (Riwayat pembelian):
+Manimpilkan riwayat pembelian / re stok barang.
+8.	Jika memilih opsi f (Ubah data barang):
+Menu ini berfungsi untuk merubah data pada barang seperti merubah haraga pasarannya dan tanggal kadaluarsaa. User memilih barang apa yang datanya ingin dirubah dengan menginput no barang tersebut.
+Tersedia opsi untuk kembali ke menu awal.
+9.	Jika memilih opsi g (Hapus barang):
+Opsi ini berfungsi untuk menghapus barang yang sudah kadaluarsa. Akan tersedia tabel yang berisi seluruh daftar barang dengan tanggal kadaluarsanya saja. Pada bagian bawah tabel , user disuruh input no barang yang ingin dihapus.
+Tersedia opsi untuk kembali ke menu awal.
