@@ -3,7 +3,6 @@
 #include <string>
 
 using namespace std;
-
 string shiftCipher(const string &teks, int shift) {
   string hasil = teks;
 
@@ -22,21 +21,20 @@ string shiftCipher(const string &teks, int shift) {
   return hasil;
 }
 
-int main() {
+void login() {
+  while (true) {
+    string password = "ehqmrepjeqmhm";
+    string passinput;
 
-  string password = "ehqmrepjeqmhm";
-  string passinput;
+    cout << "masukkan password: ";
+    cin >> passinput;
 
-  cout << "masukkan password: ";
-  cin >> passinput;
+    passinput = shiftCipher(passinput, 4);
 
-  passinput = shiftCipher(passinput, 4);
-
-  if (passinput == password) {
-    cout << "selamat datang";
-  } else {
-    cout << "password tidak valid!";
+    if (passinput == password) {
+      break;
+    } else {
+      cout << "password tidak valid!\n";
+    }
   }
-
-  return 0;
 }
