@@ -1,0 +1,4 @@
+data barang memiliki 
+kode unik, nama barang, kategori, harga beli, harga jual, diskon (jika tidak ada maka "-"), kadaluarsa diskon(jika tidak ada maka "-"), harga setelah diskon(harga sama jika tidak ada diskon)
+
+kode unik memegang semua data di barang
