@@ -12,6 +12,7 @@ struct barang {
   double hargajual;
   int jumlahstok;
   string namapromo;
+  int diskon;
   double hargasetelahdiskon;
 };
 
@@ -28,19 +29,22 @@ void PemberianPromo() {
 
   if (pilihdiskon == 1) {
     diskon = 40;
-    baru.namapromo = "Nataru (40%)";
+    baru.namapromo = "Nataru";
     baru.hargasetelahdiskon =
         baru.hargajual - (baru.hargajual * (diskon / 100));
+    baru.diskon = 40;
   } else if (pilihdiskon == 2) {
     diskon = 35;
-    baru.namapromo = "Imlek (35%)";
+    baru.namapromo = "Imlek";
     baru.hargasetelahdiskon =
         baru.hargajual - (baru.hargajual * (diskon / 100));
+    baru.diskon = 35;
   } else if (pilihdiskon == 3) {
     diskon = 40;
-    baru.namapromo = "Ramadhan (40%)";
+    baru.namapromo = "Ramadhan";
     baru.hargasetelahdiskon =
         baru.hargajual - (baru.hargajual * (diskon / 100));
+    baru.diskon = 40;
   } else {
     cout << "Nama promo: ";
     cin.ignore(); // Membersihkan buffer sebelum getline
@@ -49,6 +53,7 @@ void PemberianPromo() {
     cin >> diskon;
     baru.hargasetelahdiskon =
         baru.hargajual - (baru.hargajual * (diskon / 100));
+    baru.diskon = diskon;
   }
 }
 
@@ -95,6 +100,7 @@ void TambahBarang() {
     } else {
       baru.hargasetelahdiskon = baru.hargajual;
       baru.namapromo = "Tidak ada promo";
+      baru.diskon = 0; // Supaya tidak muncul angka acak memori saat tanpa promo
     }
 
     // Buat lapisan 3D baru untuk kodeunik yang sudah terjamin unik
@@ -114,35 +120,35 @@ int main(int argc, char *argv[]) {
   cout << fixed << setprecision(0);
 
   cout << "\n=================================================================="
-          "===================================================================="
-          "\n";
+          "================================================================\n";
   // Bagian Header Tabel
   cout << left << setw(5) << "No" << "| " << setw(11) << "Kode Unik" << "| "
        << setw(22) << "Nama Barang" << "| " << setw(14) << "Harga Beli" << "| "
-       << setw(14) << "Harga Jual" << "| " << setw(18) << "Promo" << "| "
-       << setw(15) << "Harga Promo" << "| " << setw(15) << "jumlah stok";
+       << setw(14) << "Harga Jual" << "| " << setw(22) << "Promo" << "| "
+       << setw(15) << "Harga Promo" << "| " << setw(13) << "jumlah stok";
   cout << "\n=================================================================="
-          "======================"
-          "=====================================\n";
+          "================================================================\n";
 
   // 3. Loop 3 tingkat (i = lapisan kodeunik, j = baris, k = kolom)
   int no = 1;
   for (int i = 0; i < daftarbarang.size(); i++) {
     for (int j = 0; j < daftarbarang[i].size(); j++) {
       for (int k = 0; k < daftarbarang[i][j].size(); k++) {
+        string teksPromo = daftarbarang[i][j][k].namapromo + " (" +
+                           to_string(daftarbarang[i][j][k].diskon) + "%)";
+
         cout << left << setw(5) << no++ << "| " << setw(11)
              << daftarbarang[i][j][k].kodeunik << "| " << setw(22)
              << daftarbarang[i][j][k].namabarang << "| " << setw(14)
              << daftarbarang[i][j][k].hargabeli << "| " << setw(14)
-             << daftarbarang[i][j][k].hargajual << "| " << setw(18)
-             << daftarbarang[i][j][k].namapromo << "| " << setw(15)
-             << daftarbarang[i][j][k].hargasetelahdiskon << "| "
-             << daftarbarang[i][j][k].jumlahstok << endl;
+             << daftarbarang[i][j][k].hargajual << "| " << setw(22) << teksPromo
+             << "| " << setw(15) << daftarbarang[i][j][k].hargasetelahdiskon
+             << "| " << daftarbarang[i][j][k].jumlahstok << endl;
       }
     }
   }
   cout << "===================================================================="
-          "=====================================================\n";
+          "==============================================================\n";
 
   // Cek dulu apakah ada barang yang stoknya kurang dari 5
   bool adaStokTipis = false;
@@ -164,19 +170,16 @@ int main(int argc, char *argv[]) {
   // Tabel peringatan hanya akan muncul jika adaStokTipis bernilai true
   if (adaStokTipis) {
     cout << "\n\nPERINGATAN: DAFTAR BARANG DENGAN STOK KURANG DARI 5\n";
-    cout << "=================================================================="
-            "=================================================================="
-            "=="
-            "\n";
+    cout
+        << "=================================================================="
+           "================================================================\n";
     cout << left << setw(5) << "No" << "| " << setw(11) << "Kode Unik" << "| "
          << setw(22) << "Nama Barang" << "| " << setw(14) << "Harga Beli"
-         << "| " << setw(14) << "Harga Jual" << "| " << setw(18) << "Promo"
-         << "| " << setw(15) << "Harga Promo" << "| " << setw(15)
+         << "| " << setw(14) << "Harga Jual" << "| " << setw(22) << "Promo"
+         << "| " << setw(15) << "Harga Promo" << "| " << setw(13)
          << "jumlah stok";
     cout << "\n================================================================"
-            "=="
             "=================================================================="
-            "=="
             "\n";
 
     int noTipis = 1;
@@ -184,21 +187,24 @@ int main(int argc, char *argv[]) {
       for (int j = 0; j < daftarbarang[i].size(); j++) {
         for (int k = 0; k < daftarbarang[i][j].size(); k++) {
           if (daftarbarang[i][j][k].jumlahstok < 5) {
+            string teksPromo = daftarbarang[i][j][k].namapromo + " (" +
+                               to_string(daftarbarang[i][j][k].diskon) + "%)";
+
             cout << left << setw(5) << noTipis++ << "| " << setw(11)
                  << daftarbarang[i][j][k].kodeunik << "| " << setw(22)
                  << daftarbarang[i][j][k].namabarang << "| " << setw(14)
                  << daftarbarang[i][j][k].hargabeli << "| " << setw(14)
-                 << daftarbarang[i][j][k].hargajual << "| " << setw(18)
-                 << daftarbarang[i][j][k].namapromo << "| " << setw(15)
+                 << daftarbarang[i][j][k].hargajual << "| " << setw(22)
+                 << teksPromo << "| " << setw(15)
                  << daftarbarang[i][j][k].hargasetelahdiskon << "| "
                  << daftarbarang[i][j][k].jumlahstok << endl;
           }
         }
       }
     }
-    cout << "=================================================================="
-            "=================================================================="
-            "==\n";
+    cout
+        << "=================================================================="
+           "================================================================\n";
   } else {
     cout << "semua stok aman diatas 5";
   }
