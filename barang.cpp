@@ -10,6 +10,7 @@ struct barang {
   string namabarang;
   double hargabeli;
   double hargajual;
+  int jumlahstok;
   string namapromo;
   double hargasetelahdiskon;
 };
@@ -56,8 +57,25 @@ void TambahBarang() {
     char pilihan;
     cout << "\nSELAMAT DATANG DI OPSI TAMBAH BARANG\n";
 
-    cout << "Masukkan angka unik untuk barang: ";
-    cin >> baru.kodeunik;
+    // Pengecekan kode unik agar tidak duplikat
+    while (true) {
+      cout << "Masukkan angka unik untuk barang: ";
+      cin >> baru.kodeunik;
+
+      bool duplikat = false;
+      for (int i = 0; i < daftarbarang.size(); i++) {
+        if (daftarbarang[i][0][0].kodeunik == baru.kodeunik) {
+          duplikat = true;
+          break;
+        }
+      }
+
+      if (duplikat) {
+        cout << "Kode unik sudah digunakan! Silahkan masukkan angka lain.\n";
+      } else {
+        break; // Kode unik aman, lanjut ke input berikutnya
+      }
+    }
 
     cout << "Masukkan nama barang: ";
     cin.ignore(); // Wajib ada agar input nama barang tidak ter-skip
@@ -65,9 +83,10 @@ void TambahBarang() {
 
     cout << "Harga beli: ";
     cin >> baru.hargabeli;
-
     cout << "Harga jual: ";
     cin >> baru.hargajual;
+    cout << "jumlah stok: ";
+    cin >> baru.jumlahstok;
 
     cout << "Tambahkan promo? (y/n): ";
     cin >> pilihan;
@@ -78,20 +97,8 @@ void TambahBarang() {
       baru.namapromo = "Tidak ada promo";
     }
 
-    // 2. Masukkan ke vector 3D (Lapisan [i] dipegang oleh kodeunik)
-    bool ketemu = false;
-    for (int i = 0; i < daftarbarang.size(); i++) {
-      if (daftarbarang[i][0][0].kodeunik == baru.kodeunik) {
-        daftarbarang[i].push_back(
-            {baru}); // Tambah baris baru di lapisan kodeunik yang sama
-        ketemu = true;
-        break;
-      }
-    }
-    if (!ketemu) {
-      daftarbarang.push_back(
-          {{baru}}); // Buat lapisan 3D baru untuk kodeunik baru
-    }
+    // Buat lapisan 3D baru untuk kodeunik yang sudah terjamin unik
+    daftarbarang.push_back({{baru}});
 
     cout << "Ingin menambah barang lagi? (y/n): ";
     cin >> pilihan;
@@ -107,13 +114,15 @@ int main(int argc, char *argv[]) {
   cout << fixed << setprecision(0);
 
   cout << "\n=================================================================="
-          "=======================================\n";
+          "===================================================================="
+          "\n";
   // Bagian Header Tabel
   cout << left << setw(5) << "No" << "| " << setw(11) << "Kode Unik" << "| "
        << setw(22) << "Nama Barang" << "| " << setw(14) << "Harga Beli" << "| "
        << setw(14) << "Harga Jual" << "| " << setw(18) << "Promo" << "| "
-       << setw(15) << "Harga Promo" << "\n";
-  cout << "===================================================================="
+       << setw(15) << "Harga Promo" << "| " << setw(15) << "jumlah stok";
+  cout << "\n=================================================================="
+          "======================"
           "=====================================\n";
 
   // 3. Loop 3 tingkat (i = lapisan kodeunik, j = baris, k = kolom)
@@ -127,12 +136,72 @@ int main(int argc, char *argv[]) {
              << daftarbarang[i][j][k].hargabeli << "| " << setw(14)
              << daftarbarang[i][j][k].hargajual << "| " << setw(18)
              << daftarbarang[i][j][k].namapromo << "| " << setw(15)
-             << daftarbarang[i][j][k].hargasetelahdiskon << "\n";
+             << daftarbarang[i][j][k].hargasetelahdiskon << "| "
+             << daftarbarang[i][j][k].jumlahstok << endl;
       }
     }
   }
   cout << "===================================================================="
-          "=====================================\n";
+          "=====================================================\n";
+
+  // Cek dulu apakah ada barang yang stoknya kurang dari 5
+  bool adaStokTipis = false;
+  for (int i = 0; i < daftarbarang.size(); i++) {
+    for (int j = 0; j < daftarbarang[i].size(); j++) {
+      for (int k = 0; k < daftarbarang[i][j].size(); k++) {
+        if (daftarbarang[i][j][k].jumlahstok < 5) {
+          adaStokTipis = true;
+          break;
+        }
+      }
+      if (adaStokTipis)
+        break;
+    }
+    if (adaStokTipis)
+      break;
+  }
+
+  // Tabel peringatan hanya akan muncul jika adaStokTipis bernilai true
+  if (adaStokTipis) {
+    cout << "\n\nPERINGATAN: DAFTAR BARANG DENGAN STOK KURANG DARI 5\n";
+    cout << "=================================================================="
+            "=================================================================="
+            "=="
+            "\n";
+    cout << left << setw(5) << "No" << "| " << setw(11) << "Kode Unik" << "| "
+         << setw(22) << "Nama Barang" << "| " << setw(14) << "Harga Beli"
+         << "| " << setw(14) << "Harga Jual" << "| " << setw(18) << "Promo"
+         << "| " << setw(15) << "Harga Promo" << "| " << setw(15)
+         << "jumlah stok";
+    cout << "\n================================================================"
+            "=="
+            "=================================================================="
+            "=="
+            "\n";
+
+    int noTipis = 1;
+    for (int i = 0; i < daftarbarang.size(); i++) {
+      for (int j = 0; j < daftarbarang[i].size(); j++) {
+        for (int k = 0; k < daftarbarang[i][j].size(); k++) {
+          if (daftarbarang[i][j][k].jumlahstok < 5) {
+            cout << left << setw(5) << noTipis++ << "| " << setw(11)
+                 << daftarbarang[i][j][k].kodeunik << "| " << setw(22)
+                 << daftarbarang[i][j][k].namabarang << "| " << setw(14)
+                 << daftarbarang[i][j][k].hargabeli << "| " << setw(14)
+                 << daftarbarang[i][j][k].hargajual << "| " << setw(18)
+                 << daftarbarang[i][j][k].namapromo << "| " << setw(15)
+                 << daftarbarang[i][j][k].hargasetelahdiskon << "| "
+                 << daftarbarang[i][j][k].jumlahstok << endl;
+          }
+        }
+      }
+    }
+    cout << "=================================================================="
+            "=================================================================="
+            "==\n";
+  } else {
+    cout << "semua stok aman diatas 5";
+  }
 
   return 0;
 }
